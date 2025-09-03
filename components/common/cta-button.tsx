@@ -1,45 +1,23 @@
-'use client'
-import { useState } from "react";
+"use client";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-const AnimatedButton = ({ href, children }: any) => {
-    const [isHovering, setIsHovering] = useState(false);
-
+export default function CTA({ children }: { children: React.ReactNode }) {
     return (
-        <div className="inline-block">
-            <Link href={href}>
-                <button
-                    className="group relative overflow-hidden rounded-full px-10 py-5 font-bold text-white shadow-lg"
-                    onMouseEnter={() => setIsHovering(true)}
-                    onMouseLeave={() => setIsHovering(false)}
-                >
-                    {/* Base background layer */}
-                    <div className="absolute inset-0 bg-slate-900" />
+        <Link href="#pricing">
+            <button className="relative inline-flex items-center gap-2 rounded-full px-8 py-4 font-semibold text-white text-lg shadow-lg overflow-hidden transition-all group">
+                {/* Glow background */}
+                <span className="absolute inset-0 bg-gradient-to-r from-teal-500 to-blue-600 group-hover:scale-110 transition-transform" />
 
-                    {/* Animated gradient overlay */}
-                    <div
-                        className={`absolute inset-0 bg-gradient-to-r from-[#088972] to-[#1B3669]/10 transition-transform duration-500 ease-out ${isHovering ? "translate-x-0" : "-translate-x-full"}`}
-                    />
+                {/* Glass overlay */}
+                <span className="absolute inset-0 bg-white/10 backdrop-blur-sm" />
 
-                    {/* Content with arrow animation */}
-                    <div className="relative flex items-center gap-2">
-                        <span>{children}</span>
-                        <ArrowRight className={`transition-transform duration-300 ${isHovering ? "translate-x-1" : ""
-                            }`} />
-                    </div>
-                </button>
-            </Link>
-        </div>
-    );
-};
-
-export default function CTA() {
-    return (
-        <div className="mt-6 lg:mt-16">
-            <AnimatedButton href="#pricing">
-                Try LOL Labs
-            </AnimatedButton>
-        </div>
+                {/* Button content */}
+                <span className="relative flex items-center gap-2">
+                    {children}
+                    <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+            </button>
+        </Link>
     );
 }
